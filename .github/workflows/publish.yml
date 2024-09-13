@@ -1,4 +1,4 @@
-name: Publish to GitHub Packages on Merge to Main
+name: Publish to npm on Merge to Main
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-          registry-url: https://registry.npmjs.org/
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -25,10 +25,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Version
-        run: pnpm run build
+      - name: Update Version
+        run: pnpm version patch --no-git-tag-version
 
       - name: Publish to npm
+        run: echo //registry.npmjs.org/:_authToken=$NPM_TOKEN > .npmrc
         run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
