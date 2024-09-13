@@ -19,6 +19,9 @@ jobs:
           node-version: '18'
           cache: 'pnpm'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
         run: pnpm install
 
@@ -27,7 +30,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           pnpm version patch
-          git push --follow-tags
+          git push origin main --tags
 
       - name: Publish to npm
         run: pnpm publish --access public
