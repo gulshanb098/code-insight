@@ -26,26 +26,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Bump Version & Create a new tag
+      - name: Update Version
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          
-          # Bump the version
-          pnpm version patch
-          
-          # Set the remote URL with PAT token
-          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
-          
-          # Check the status and commit changes
-          git status
-          git add -A
-          git commit -m "Bump version to $(pnpm pkg get version)" || echo "No changes to commit"
-          
-          # Push changes and tags
-          git push origin main --tags
+          pnpm version patch --no-git-tag-version
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET_CODE_INSIGHT }}
 
       - name: Publish to npm
         run: pnpm publish --access public
