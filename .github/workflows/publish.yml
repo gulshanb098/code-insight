@@ -29,8 +29,9 @@ jobs:
         run: pnpm version patch --no-git-tag-version
 
       - name: Publish to npm
-        run: echo //registry.npmjs.org/:_authToken=$NPM_TOKEN > .npmrc
-        run: pnpm publish --access public --no-git-checks
+        run: |
+          echo //registry.npmjs.org/:_authToken=$NPM_TOKEN > .npmrc
+          pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
