@@ -40,7 +40,7 @@ const wrapText = (text: string, width: number) => {
  * @param directoryPath Path to the codebase directory
  * @returns Report object with metrics
  */
-export const generateReport = (directoryPath: string) => {
+const generateReport = (directoryPath: string) => {
   const report = processFiles(directoryPath);
   console.log(
     chalk.green(textSync("Code Insight", { horizontalLayout: "full" }))
@@ -117,3 +117,16 @@ export const generateReport = (directoryPath: string) => {
       `Consider refactoring the areas related to this metric as it has the highest value.\n`
   );
 };
+
+// CLI execution
+if (import.meta.url === new URL('file://' + process.argv[1]).href) {
+  const [,, directoryPath] = process.argv;
+  if (directoryPath) {
+    generateReport(directoryPath);
+  } else {
+    console.error("Please provide a directory path.");
+    process.exit(1);
+  }
+}
+
+export { generateReport };

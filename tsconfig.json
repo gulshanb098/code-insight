@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ESNext",              // Use the latest ECMAScript version
-    "module": "ESNext",              // Ensure module system is Node16
-    "declaration": true,
+    "target": "ES2020",
+    "module": "ESNext",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",   // Match moduleResolution with module
-    "resolveJsonModule": true        // Enable JSON module resolution if needed
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "sourceMap": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules"]
 }

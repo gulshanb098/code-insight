@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "start": "ts-node src/index.ts",
     "prepublishOnly": "pnpm run build"
   },
   "repository": {
