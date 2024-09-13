@@ -42,10 +42,10 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          pnpm version patch
           git add -A
           git commit -m "Bump version to $(pnpm pkg get version)" || echo "No changes to commit"
-          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }} main --tags
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin main --tags
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
