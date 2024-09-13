@@ -116,4 +116,6 @@ export const generateReport = (directoryPath: string) => {
       `The highest complexity metric is '${highestPriorityMetric.name}'. ` +
       `Consider refactoring the areas related to this metric as it has the highest value.\n`
   );
+
+  console.log('hello world');
 };
