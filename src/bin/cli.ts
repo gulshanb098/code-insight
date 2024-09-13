@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { generateReport } from "../index.js";
 
 // Check if a directory path was provided
