@@ -14,33 +14,26 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
+
       - name: Install pnpm
         run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Check for uncommitted changes
-        id: check_dirty
-        run: |
-          git status --porcelain || true
-        continue-on-error: true
-
-      - name: Clean up working directory if needed
-        if: steps.check_dirty.outputs.stdout != ''
-        run: |
-          git reset --hard
-          git clean -fd
+      - name: Clean untracked files
+        run: git clean -fdx
 
       - name: Bump Version & Create a new tag
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           pnpm version patch
+          git add -A
+          git commit -m "Bump version to $(pnpm pkg get version)"
           git push origin main --tags
 
       - name: Publish to npm
