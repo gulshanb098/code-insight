@@ -24,15 +24,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Ensure working directory is clean
+      - name: Check for uncommitted changes
+        id: check_dirty
         run: |
-          git status
-          git diff --exit-code
-          git diff --cached --exit-code
+          git status --porcelain || true
         continue-on-error: true
-        
-      - name: Clean up working directory
-        if: failure()  # Runs only if the previous step failed
+
+      - name: Clean up working directory if needed
+        if: steps.check_dirty.outputs.stdout != ''
         run: |
           git reset --hard
           git clean -fd
