@@ -40,7 +40,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/gulshanb098"
+    "registry": "https://npm.pkg.github.com/"
   },
   "type": "module",
   "engines": {
