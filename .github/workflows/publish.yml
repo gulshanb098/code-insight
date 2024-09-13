@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Ensure full history is available
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -24,6 +26,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Check Git Status
+        run: |
+          git status
+          git diff
+          git diff --cached
+
+      - name: Reset local changes
+        run: git reset --hard HEAD
+
       - name: Clean untracked files
         run: git clean -fdx
 
@@ -33,7 +44,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           pnpm version patch
           git add -A
-          git commit -m "Bump version to $(pnpm pkg get version)"
+          git commit -m "Bump version to $(pnpm pkg get version)" || echo "No changes to commit"
           git push origin main --tags
 
       - name: Publish to npm
