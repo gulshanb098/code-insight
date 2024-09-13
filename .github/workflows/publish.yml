@@ -27,12 +27,12 @@ jobs:
       - name: Update Version
         run: pnpm version patch --no-git-tag-version
 
-      - name: Check npm authentication
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET_CODE_INSIGHT }}
-
       - name: Publish to npm
         run: pnpm publish --access public --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET_CODE_INSIGHT }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Check npm authentication
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
