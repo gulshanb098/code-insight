@@ -45,7 +45,10 @@ jobs:
           pnpm version patch
           git add -A
           git commit -m "Bump version to $(pnpm pkg get version)" || echo "No changes to commit"
-          git push origin main --tags
+          git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }} main --tags
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
 
       - name: Publish to npm
         run: pnpm publish --access public
