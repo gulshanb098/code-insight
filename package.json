@@ -14,6 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/gulshanb098/code-insight.git"
   },
+  "bugs": {
+    "url": "https://github.com/gulshanb098/code-insight/issues"
+  },
   "keywords": [
     "code",
     "analysis",
@@ -36,6 +39,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/gulshanb098"
+  },
   "type": "module",
   "engines": {
     "node": ">=12.0.0"
