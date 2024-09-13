@@ -17,7 +17,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-          registry-url: "https://npm.pkg.github.com/"
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci
+      - run: npm test
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -25,8 +28,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Update Version
-        run: pnpm version patch --no-git-tag-version
+      - name: Build Version
+        run: pnpm run build
 
       - name: Publish to npm
         run: pnpm publish --access public --no-git-checks
