@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Ensure full history is available
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -27,10 +25,14 @@ jobs:
         run: pnpm install
 
       - name: Update Version
-        run: |
-          pnpm version patch --no-git-tag-version
+        run: pnpm version patch --no-git-tag-version
 
       - name: Publish to npm
         run: pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET_CODE_INSIGHT }}
+
+      - name: Check npm authentication
+        run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET_CODE_INSIGHT }}
