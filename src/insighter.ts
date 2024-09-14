@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { extname, join } from "path";
 
 // Control Flow Complexity Keywords
@@ -161,20 +161,35 @@ export const processFiles = (directoryPath: string) => {
 
   // Function to recursively process directories
   const processDirectory = (dir: string) => {
-    const files = readdirSync(dir);
+    if (!existsSync(dir)) {
+      console.error(`Directory does not exist: ${dir}`);
+      return;
+    }
 
-    files.forEach((file) => {
-      const filePath = join(dir, file);
-      const stats = statSync(filePath);
+    try {
+      // Read the contents of the directory
+      const files = readdirSync(dir);
 
-      if (stats.isDirectory()) {
-        // Recursively process subdirectory
-        processDirectory(filePath);
-      } else if (extname(file) === ".js" || extname(file) === ".ts") {
-        // Process the file if it's a .js or .ts file
-        processFile(filePath);
+      files.forEach((file) => {
+        const filePath = join(dir, file);
+        const stats = statSync(filePath);
+
+        if (stats.isDirectory()) {
+          // Recursively process subdirectory
+          processDirectory(filePath);
+        } else if (extname(file) === ".js" || extname(file) === ".ts") {
+          // Process the file if it's a .js or .ts file
+          processFile(filePath);
+        }
+      });
+    } catch (dirError: unknown) {
+      if (dirError instanceof Error) {
+        console.error(`Error reading directory '${dir}':`, dirError.message);
+      } else {
+        console.error(`Unknown error reading directory '${dir}':`, dirError);
       }
-    });
+      process.exit(1);
+    }
   };
 
   // Start processing from the root directory
