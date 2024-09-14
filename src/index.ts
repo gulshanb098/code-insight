@@ -103,7 +103,7 @@ const generateReport = (directoryPath: string) => {
     "Behavioral Constructs": report.behave,
     "TODO Count": report.todo,
     "Error Density": report.errorDensity,
-    "Code Debt Ratio": report.debtScore,
+    "Large File Indicator": report.debtScore,
   };
 
   const highestPriorityMetric = Object.entries(metrics).reduce(
